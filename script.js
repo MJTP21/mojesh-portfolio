@@ -758,58 +758,129 @@ document.addEventListener(
 );
 
 
-
 /* =====================================================
    CONTACT FORM
 ===================================================== */
 
-const contactForm =
-    document.getElementById(
-        "contactForm"
-    );
-
+const contactForm = document.getElementById("contactForm");
 
 if (contactForm) {
 
+    contactForm.addEventListener("submit", async function (event) {
 
-    const formMessage =
-        document.getElementById(
-            "form-message"
-        );
+        event.preventDefault();
+
+        const formMessage =
+            document.getElementById("form-message");
+
+        const sendButton =
+            document.getElementById("sendButton");
+
+        const name =
+            document.getElementById("name").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        const subject =
+            document.getElementById("subject").value.trim();
+
+        const message =
+            document.getElementById("message").value.trim();
 
 
-    contactForm.addEventListener(
-        "submit",
-        function () {
+        if (!name || !email || !subject || !message) {
+
+            formMessage.textContent =
+                "Please fill in all fields.";
+
+            formMessage.style.color =
+                "#ff6b6b";
+
+            return;
+        }
 
 
-            /*
-             IMPORTANT:
+        sendButton.disabled = true;
 
-             Do NOT use preventDefault().
+        sendButton.innerHTML =
+            'Sending... <i class="fas fa-spinner fa-spin"></i>';
 
-             This allows Formspree / Flask
-             to receive the form normally.
-            */
+        formMessage.textContent =
+            "Sending your message...";
+
+        formMessage.style.color =
+            "#ffffff";
 
 
-            if (formMessage) {
+        try {
+
+            const response = await fetch(
+                "/api/contact",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        subject: subject,
+                        message: message
+                    })
+                }
+            );
+
+
+            const result = await response.json();
+
+
+            if (response.ok && result.success) {
 
                 formMessage.textContent =
-                    "Sending your message...";
-
+                    "Message sent successfully! Thank you.";
 
                 formMessage.style.color =
-                    "#ffffff";
+                    "#4ade80";
 
+                contactForm.reset();
+
+            } else {
+
+                formMessage.textContent =
+                    result.message ||
+                    "Unable to send your message.";
+
+                formMessage.style.color =
+                    "#ff6b6b";
             }
 
 
+        } catch (error) {
+
+            console.error(
+                "Contact form error:",
+                error
+            );
+
+            formMessage.textContent =
+                "Something went wrong. Please try again.";
+
+            formMessage.style.color =
+                "#ff6b6b";
         }
-    );
+
+
+        sendButton.disabled = false;
+
+        sendButton.innerHTML =
+            'Send Message <i class="fas fa-paper-plane"></i>';
+
+    });
 
 }
-
 
 
 /* =====================================================

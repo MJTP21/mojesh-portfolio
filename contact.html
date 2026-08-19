@@ -298,133 +298,101 @@
 
 
 
-    <!-- =================================================
-         CONTACT FORM
-    ================================================== -->
+<!-- =================================================
+     CONTACT FORM
+================================================= -->
 
-    <form
+<form id="contactForm">
 
-        id="contactForm">
+    <!-- NAME -->
 
+    <div class="input-group">
 
-        <!-- NAME -->
+        <input
+            type="text"
+            id="name"
+            name="name"
+            autocomplete="name"
+            required>
 
-        <div class="input-group">
+        <label for="name">
+            Your Name
+        </label>
 
+    </div>
 
-            <input
-                type="text"
-                id="name"
-                name="name"
-                autocomplete="name"
-                required>
 
+    <!-- EMAIL -->
 
-            <label for="name">
+    <div class="input-group">
 
-                Your Name
+        <input
+            type="email"
+            id="email"
+            name="email"
+            autocomplete="email"
+            required>
 
-            </label>
+        <label for="email">
+            Your Email
+        </label>
 
+    </div>
 
-        </div>
 
+    <!-- SUBJECT -->
 
+    <div class="input-group">
 
-        <!-- EMAIL -->
+        <input
+            type="text"
+            id="subject"
+            name="subject"
+            required>
 
-        <div class="input-group">
+        <label for="subject">
+            Subject
+        </label>
 
+    </div>
 
-            <input
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                required>
 
+    <!-- MESSAGE -->
 
-            <label for="email">
+    <div class="input-group">
 
-                Your Email
+        <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required></textarea>
 
-            </label>
+        <label for="message">
+            Your Message
+        </label>
 
+    </div>
 
-        </div>
 
+    <!-- SUBMIT BUTTON -->
 
+    <button
+        type="submit"
+        class="btn primary-btn"
+        id="sendButton">
 
-        <!-- SUBJECT -->
+        Send Message
 
-        <div class="input-group">
+        <i class="fas fa-paper-plane"></i>
 
+    </button>
 
-            <input
-                type="text"
-                id="subject"
-                name="subject"
-                required>
 
+    <!-- STATUS MESSAGE -->
 
-            <label for="subject">
+    <p id="form-message"></p>
 
-                Subject
-
-            </label>
-
-
-        </div>
-
-
-
-        <!-- MESSAGE -->
-
-        <div class="input-group">
-
-
-            <textarea
-                id="message"
-                name="message"
-                rows="5"
-                required></textarea>
-
-
-            <label for="message">
-
-                Your Message
-
-            </label>
-
-
-        </div>
-
-
-
-        <!-- SUBMIT -->
-
-        <button
-            type="submit"
-            class="btn primary-btn">
-
-
-            Send Message
-
-
-            <i class="fas fa-paper-plane"></i>
-
-
-        </button>
-
-
-
-        <!-- STATUS MESSAGE -->
-
-        <p id="form-message"></p>
-
-
-    </form>
-
+</form>
 
 </section>
 
