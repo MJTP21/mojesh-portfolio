@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Contact Mojesh Tripura">
+
+    <title>Contact | Mojesh Tripura</title>
+
+
+    <!-- GOOGLE FONT -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- YOUR CSS -->
+
+    <link rel="stylesheet"
+          href="style.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <nav class="navbar">
+
+
+        <!-- LOGO -->
+
+        <a href="index.html"
+           class="logo">
+
+            MOJESH<span>.</span>
+
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <ul class="nav-links"
+            id="navLinks">
+
+
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+
+
+            <li>
+                <a href="about.html">
+                    About
+                </a>
+            </li>
+
+
+            <li>
+                <a href="skills.html">
+                    Skills
+                </a>
+            </li>
+
+
+            <li>
+                <a href="projects.html">
+                    Projects
+                </a>
+            </li>
+
+
+            <li>
+                <a href="contact.html"
+                   class="active">
+
+                    Contact
+
+                </a>
+            </li>
+
+
+        </ul>
+
+
+        <!-- LET'S TALK -->
+
+        <a href="contact.html"
+           class="nav-btn">
+
+            Let's Talk
+
+        </a>
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+            type="button"
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="Open navigation menu">
+
+            <i class="fas fa-bars"></i>
+
+        </button>
+
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     PAGE HEADER
+===================================================== -->
+
+<section class="page-header">
+
+
+    <p>
+        GET IN TOUCH
+    </p>
+
+
+    <h1>
+
+        Let's
+
+        <span>
+            Connect
+        </span>
+
+    </h1>
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+
+        <a href="index.html">
+
+            Home
+
+        </a>
+
+
+        <span>
+            /
+        </span>
+
+
+        <span>
+            Contact
+        </span>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     CONTACT SECTION
+===================================================== -->
+
+<section class="contact-page">
+
+
+    <!-- =================================================
+         CONTACT INFORMATION
+    ================================================== -->
+
+    <div class="contact-info">
+
+
+        <h2>
+
+            Have an idea?
+
+            <br>
+
+            <span>
+                Let's build it.
+            </span>
+
+        </h2>
+
+
+        <p>
+
+            Have a project idea, collaboration
+            opportunity or simply want to say hello?
+
+            Send me a message.
+
+        </p>
+
+
+
+        <!-- EMAIL -->
+
+        <div class="contact-item">
+
+
+            <div class="contact-icon">
+
+                <i class="fas fa-envelope"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Email
+                </span>
+
+
+                <!-- CHANGE THIS EMAIL -->
+
+                <strong>
+
+                    your@email.com
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- INBOX -->
+
+        <div class="contact-item">
+
+
+            <div class="contact-icon">
+
+                <i class="fas fa-inbox"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Inbox
+                </span>
+
+
+                <strong>
+
+                    Send me a message
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONTACT FORM
+    ================================================== -->
+
+    <form
+
+        id="contactForm">
+
+
+        <!-- NAME -->
+
+        <div class="input-group">
+
+
+            <input
+                type="text"
+                id="name"
+                name="name"
+                autocomplete="name"
+                required>
+
+
+            <label for="name">
+
+                Your Name
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- EMAIL -->
+
+        <div class="input-group">
+
+
+            <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                required>
+
+
+            <label for="email">
+
+                Your Email
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- SUBJECT -->
+
+        <div class="input-group">
+
+
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                required>
+
+
+            <label for="subject">
+
+                Subject
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- MESSAGE -->
+
+        <div class="input-group">
+
+
+            <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required></textarea>
+
+
+            <label for="message">
+
+                Your Message
+
+            </label>
+
+
+        </div>
+
+
+
+        <!-- SUBMIT -->
+
+        <button
+            type="submit"
+            class="btn primary-btn">
+
+
+            Send Message
+
+
+            <i class="fas fa-paper-plane"></i>
+
+
+        </button>
+
+
+
+        <!-- STATUS MESSAGE -->
+
+        <p id="form-message"></p>
+
+
+    </form>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <div class="footer-logo">
+
+        MOJESH<span>.</span>
+
+    </div>
+
+
+    <p>
+
+        Designed & Built by Mojesh Tripura
+
+    </p>
+
+
+    <p class="copyright">
+
+        © 2026 Mojesh Tripura.
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- JAVASCRIPT -->
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
