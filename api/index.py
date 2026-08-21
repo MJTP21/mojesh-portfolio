@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
-@app.route("/api/contact", methods=["POST"])
+@app.route("/", methods=["POST"])
 def contact():
 
     try:
@@ -30,17 +30,17 @@ def contact():
                 "message": "Please fill in all fields."
             }), 400
 
-        # Get Gmail credentials from Vercel
         gmail_user = os.environ.get("GMAIL_USER")
         gmail_password = os.environ.get("GMAIL_APP_PASSWORD")
 
         if not gmail_user or not gmail_password:
+            print("Gmail environment variables are missing.")
+
             return jsonify({
                 "success": False,
-                "message": "Gmail environment variables are missing."
+                "message": "Email configuration is missing."
             }), 500
 
-        # Create email
         email_message = EmailMessage()
 
         email_message["From"] = gmail_user
@@ -49,8 +49,7 @@ def contact():
         email_message["Subject"] = f"Portfolio Contact: {subject}"
 
         email_message.set_content(
-            f"""
-New message from your portfolio website.
+            f"""New message from your portfolio website.
 
 Name:
 {name}
@@ -66,8 +65,8 @@ Message:
 """
         )
 
-        # Connect to Gmail
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
+
             server.starttls()
 
             server.login(
@@ -86,15 +85,9 @@ Message:
 
     except Exception as error:
 
-        error_message = str(error)
-
-        print("Email error:", error_message)
+        print("Email error:", str(error))
 
         return jsonify({
             "success": False,
-            "message": f"Email error: {error_message}"
+            "message": "Unable to send message."
         }), 500
-
-
-if __name__ == "__main__":
-    app.run()
