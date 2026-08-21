@@ -1,38 +1,21 @@
 {
   "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "source": "/about",
+      "destination": "/about.html"
     },
     {
-      "src": "*.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
+      "source": "/skills",
+      "destination": "/skills.html"
     },
     {
-      "src": "/about",
-      "dest": "/about.html"
+      "source": "/projects",
+      "destination": "/projects.html"
     },
     {
-      "src": "/skills",
-      "dest": "/skills.html"
-    },
-    {
-      "src": "/projects",
-      "dest": "/projects.html"
-    },
-    {
-      "src": "/contact",
-      "dest": "/contact.html"
-    },
-    {
-      "handle": "filesystem"
+      "source": "/contact",
+      "destination": "/contact.html"
     }
   ]
 }
