@@ -1,31 +1,20 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "api/contact.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/contact",
-      "dest": "api/contact.py"
+      "source": "/about",
+      "destination": "/about.html"
     },
     {
-      "src": "/about",
-      "dest": "/about.html"
+      "source": "/skills",
+      "destination": "/skills.html"
     },
     {
-      "src": "/skills",
-      "dest": "/skills.html"
+      "source": "/projects",
+      "destination": "/projects.html"
     },
     {
-      "src": "/projects",
-      "dest": "/projects.html"
-    },
-    {
-      "src": "/contact",
-      "dest": "/contact.html"
+      "source": "/contact",
+      "destination": "/contact.html"
     }
   ]
 }
