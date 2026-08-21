@@ -757,7 +757,6 @@ document.addEventListener(
     }
 );
 
-
 /* =====================================================
    CONTACT FORM
 ===================================================== */
@@ -770,116 +769,68 @@ if (contactForm) {
 
         event.preventDefault();
 
-        const formMessage =
-            document.getElementById("form-message");
+        const formMessage = document.getElementById("form-message");
+        const sendButton = document.getElementById("sendButton");
 
-        const sendButton =
-            document.getElementById("sendButton");
-
-        const name =
-            document.getElementById("name").value.trim();
-
-        const email =
-            document.getElementById("email").value.trim();
-
-        const subject =
-            document.getElementById("subject").value.trim();
-
-        const message =
-            document.getElementById("message").value.trim();
-
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const subject = document.getElementById("subject").value.trim();
+        const message = document.getElementById("message").value.trim();
 
         if (!name || !email || !subject || !message) {
-
-            formMessage.textContent =
-                "Please fill in all fields.";
-
-            formMessage.style.color =
-                "#ff6b6b";
-
+            formMessage.textContent = "Please fill in all fields.";
+            formMessage.style.color = "#ff6b6b";
             return;
         }
 
-
         sendButton.disabled = true;
-
-        sendButton.innerHTML =
-            'Sending... <i class="fas fa-spinner fa-spin"></i>';
-
-        formMessage.textContent =
-            "Sending your message...";
-
-        formMessage.style.color =
-            "#ffffff";
-
+        sendButton.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+        formMessage.textContent = "Sending your message...";
+        formMessage.style.color = "#ffffff";
 
         try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    message: message
+                })
+            });
 
-            const response = await fetch(
-                "/api/contact",
-                {
-                    method: "POST",
+            // Read the response safely
+            const rawText = await response.text();
+            let result;
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        name: name,
-                        email: email,
-                        subject: subject,
-                        message: message
-                    })
-                }
-            );
-
-
-            const result = await response.json();
-
-
-            if (response.ok && result.success) {
-
-                formMessage.textContent =
-                    "Message sent successfully! Thank you.";
-
-                formMessage.style.color =
-                    "#4ade80";
-
-                contactForm.reset();
-
-            } else {
-
-                formMessage.textContent =
-                    result.message ||
-                    "Unable to send your message.";
-
-                formMessage.style.color =
-                    "#ff6b6b";
+            try {
+                result = JSON.parse(rawText);
+            } catch (e) {
+                throw new Error(`Server returned HTTP ${response.status}: ${rawText.substring(0, 120)}`);
             }
 
+            if (response.ok && result.success) {
+                formMessage.textContent = "Message sent successfully! Thank you.";
+                formMessage.style.color = "#4ade80";
+                contactForm.reset();
+            } else {
+                formMessage.textContent = result.message || `Error (${response.status}): Could not send email.`;
+                formMessage.style.color = "#ff6b6b";
+            }
 
         } catch (error) {
-
-            console.error(
-                "Contact form error:",
-                error
-            );
-
-            formMessage.textContent =
-                "Something went wrong. Please try again.";
-
-            formMessage.style.color =
-                "#ff6b6b";
+            console.error("Contact form error:", error);
+            // Shows the real underlying error on screen
+            formMessage.textContent = error.message || "Failed to connect to the server.";
+            formMessage.style.color = "#ff6b6b";
         }
 
-
         sendButton.disabled = false;
-
-        sendButton.innerHTML =
-            'Send Message <i class="fas fa-paper-plane"></i>';
-
+        sendButton.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
     });
-
 }
 
 
