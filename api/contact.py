@@ -39,10 +39,8 @@ class handler(BaseHTTPRequestHandler):
         )
         return
 
-      # Clean potential spaces
       smtp_pass = smtp_pass.replace(" ", "")
 
-      # Prepare message
       msg = MIMEMultipart()
       msg["From"] = smtp_user
       msg["To"] = receiver
@@ -52,7 +50,6 @@ class handler(BaseHTTPRequestHandler):
       body = f"Name: {name}\nEmail: {sender_email}\nSubject: {subject}\n\nMessage:\n{message}"
       msg.attach(MIMEText(body, "plain", "utf-8"))
 
-      # Send via SMTP
       with smtplib.SMTP("smtp.gmail.com", 587) as server:
         server.starttls()
         server.login(smtp_user, smtp_pass)
