@@ -34,8 +34,6 @@ def contact():
         gmail_password = os.environ.get("GMAIL_APP_PASSWORD")
 
         if not gmail_user or not gmail_password:
-            print("Gmail environment variables are missing.")
-
             return jsonify({
                 "success": False,
                 "message": "Email configuration is missing."
@@ -75,8 +73,6 @@ Message:
             )
 
             server.send_message(email_message)
-
-        print("Email sent successfully.")
 
         return jsonify({
             "success": True,
