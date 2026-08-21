@@ -1,6 +1,7 @@
 import json
 import os
 import smtplib
+import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from http.server import BaseHTTPRequestHandler
@@ -13,11 +14,17 @@ class handler(BaseHTTPRequestHandler):
     post_data = self.rfile.read(content_length)
 
     try:
+      if not post_data:
+        self._send_response(
+            400, {"success": False, "message": "Empty request body."}
+        )
+        return
+
       data = json.loads(post_data.decode("utf-8"))
-      name = data.get("name")
-      sender_email = data.get("email")
-      subject = data.get("subject")
-      message = data.get("message")
+      name = data.get("name", "").strip()
+      sender_email = data.get("email", "").strip()
+      subject = data.get("subject", "").strip()
+      message = data.get("message", "").strip()
 
       if not all([name, sender_email, subject, message]):
         self._send_response(
@@ -34,13 +41,18 @@ class handler(BaseHTTPRequestHandler):
             500,
             {
                 "success": False,
-                "message": "Server email configuration is missing.",
+                "message": (
+                    "Server error: Missing EMAIL_USER or EMAIL_PASS environment"
+                    " variables."
+                ),
             },
         )
         return
 
+      # Clean app password from whitespace
       smtp_pass = smtp_pass.replace(" ", "")
 
+      # Prepare email
       msg = MIMEMultipart()
       msg["From"] = smtp_user
       msg["To"] = receiver
@@ -50,17 +62,33 @@ class handler(BaseHTTPRequestHandler):
       body = f"Name: {name}\nEmail: {sender_email}\nSubject: {subject}\n\nMessage:\n{message}"
       msg.attach(MIMEText(body, "plain", "utf-8"))
 
-      with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.starttls()
+      # Connect directly using SSL on port 465 with a 10-second timeout
+      context = ssl.create_default_context()
+      with smtplib.SMTP_SSL(
+          "smtp.gmail.com", 465, context=context, timeout=10
+      ) as server:
         server.login(smtp_user, smtp_pass)
-        server.send_message(msg)
+        server.sendmail(smtp_user, receiver, msg.as_string())
 
       self._send_response(
           200, {"success": True, "message": "Message sent successfully!"}
       )
 
+    except smtplib.SMTPAuthenticationError:
+      self._send_response(
+          500,
+          {
+              "success": False,
+              "message": (
+                  "SMTP Authentication failed. Verify your 16-character Google"
+                  " App Password."
+              ),
+          },
+      )
     except Exception as e:
-      self._send_response(500, {"success": False, "message": str(e)})
+      self._send_response(
+          500, {"success": False, "message": f"Server Error: {str(e)}"}
+      )
 
   def _send_response(self, status_code, body):
     self.send_response(status_code)
