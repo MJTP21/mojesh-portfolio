@@ -90,11 +90,13 @@ Message:
             "message": "Message sent successfully!"
         }), 200
 
-    except Exception as error:
+except Exception as error:
 
-        print("Email error:", str(error))
+    error_message = str(error)
 
-        return jsonify({
-            "success": False,
-            "message": "Unable to send message."
-        }), 500
+    print("Email error:", error_message)
+
+    return jsonify({
+        "success": False,
+        "message": f"Email error: {error_message}"
+    }), 500
