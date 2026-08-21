@@ -2,14 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "api/contact.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/contact",
-      "dest": "api/index.py"
+      "dest": "api/contact.py"
     },
     {
       "src": "/about",
@@ -26,10 +26,6 @@
     {
       "src": "/contact",
       "dest": "/contact.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
     }
   ]
 }
