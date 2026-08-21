@@ -30,17 +30,14 @@ def contact():
                 "message": "Please fill in all fields."
             }), 400
 
-        # Get Gmail details from Vercel Environment Variables
+        # Get Gmail credentials from Vercel
         gmail_user = os.environ.get("GMAIL_USER")
         gmail_password = os.environ.get("GMAIL_APP_PASSWORD")
 
         if not gmail_user or not gmail_password:
-
-            print("Gmail environment variables are missing.")
-
             return jsonify({
                 "success": False,
-                "message": "Email configuration is missing."
+                "message": "Gmail environment variables are missing."
             }), 500
 
         # Create email
@@ -69,9 +66,8 @@ Message:
 """
         )
 
-        # Connect to Gmail SMTP
+        # Connect to Gmail
         with smtplib.SMTP("smtp.gmail.com", 587) as server:
-
             server.starttls()
 
             server.login(
@@ -79,9 +75,7 @@ Message:
                 gmail_password
             )
 
-            server.send_message(
-                email_message
-            )
+            server.send_message(email_message)
 
         print("Email sent successfully.")
 
@@ -90,13 +84,17 @@ Message:
             "message": "Message sent successfully!"
         }), 200
 
-except Exception as error:
+    except Exception as error:
 
-    error_message = str(error)
+        error_message = str(error)
 
-    print("Email error:", error_message)
+        print("Email error:", error_message)
 
-    return jsonify({
-        "success": False,
-        "message": f"Email error: {error_message}"
-    }), 500
+        return jsonify({
+            "success": False,
+            "message": f"Email error: {error_message}"
+        }), 500
+
+
+if __name__ == "__main__":
+    app.run()
