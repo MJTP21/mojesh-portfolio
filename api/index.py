@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
-@app.route("/", methods=["POST"])
+@app.route("/api/contact", methods=["POST"])
 def contact():
 
     try:
