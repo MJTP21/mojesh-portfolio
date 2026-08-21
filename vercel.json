@@ -1,20 +1,35 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/about",
-      "destination": "/about.html"
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/contact",
+      "dest": "/api/index.py"
     },
     {
-      "source": "/skills",
-      "destination": "/skills.html"
+      "src": "/about",
+      "dest": "/about.html"
     },
     {
-      "source": "/projects",
-      "destination": "/projects.html"
+      "src": "/skills",
+      "dest": "/skills.html"
     },
     {
-      "source": "/contact",
-      "destination": "/contact.html"
+      "src": "/projects",
+      "dest": "/projects.html"
+    },
+    {
+      "src": "/contact",
+      "dest": "/contact.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
