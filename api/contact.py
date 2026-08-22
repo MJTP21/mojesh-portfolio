@@ -16,7 +16,7 @@ class handler(BaseHTTPRequestHandler):
     try:
       if not post_data:
         self._send_response(
-            400, {"success": False, "message": "Empty request body."}
+            400, {"success": False, "message": "No data received."}
         )
         return
 
@@ -41,18 +41,14 @@ class handler(BaseHTTPRequestHandler):
             500,
             {
                 "success": False,
-                "message": (
-                    "Server error: Missing EMAIL_USER or EMAIL_PASS environment"
-                    " variables."
-                ),
+                "message": "Missing EMAIL_USER or EMAIL_PASS in Vercel settings.",
             },
         )
         return
 
-      # Clean app password from whitespace
       smtp_pass = smtp_pass.replace(" ", "")
 
-      # Prepare email
+      # Create MIME email message
       msg = MIMEMultipart()
       msg["From"] = smtp_user
       msg["To"] = receiver
@@ -62,7 +58,7 @@ class handler(BaseHTTPRequestHandler):
       body = f"Name: {name}\nEmail: {sender_email}\nSubject: {subject}\n\nMessage:\n{message}"
       msg.attach(MIMEText(body, "plain", "utf-8"))
 
-      # Connect directly using SSL on port 465 with a 10-second timeout
+      # Send via Gmail SMTP SSL port 465
       context = ssl.create_default_context()
       with smtplib.SMTP_SSL(
           "smtp.gmail.com", 465, context=context, timeout=10
